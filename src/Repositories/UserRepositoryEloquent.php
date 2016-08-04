@@ -78,7 +78,9 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         if (! array_key_exists('password', $attributes)) {
             $model->fill($attributes);
             if (Config::get('entrust-gui.confirmable') === true) {
-                $model->password_confirmation = $model->password;
+                unset($model->password);
+                unset($model->password_confirmation);
+                
             }
             $model->saveWithoutHashing();
         } else {
